@@ -1,16 +1,13 @@
-import Timer from './timer';
+import Timer from '../models/timer';
+import getRandomInt from '../utils/random';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function getRandomTime(min, max) {
-    return min + Math.floor(Math.random() * (max - min));
-}
-
 test('timer counts down time correctly', async () => {
-    let totalTime = getRandomTime(0, 25 * 1000);
-    let sleepTime = getRandomTime(0, 200);
+    let totalTime = getRandomInt(0, 25 * 1000);
+    let sleepTime = getRandomInt(0, 200);
     let errorMargin = 10;
     let timer = new Timer(totalTime);
 
@@ -23,8 +20,8 @@ test('timer counts down time correctly', async () => {
 });
 
 test('timer has to be explicitly started', async () => {
-    let totalTime = getRandomTime(0, 25 * 1000);
-    let sleepTime = getRandomTime(0, 200);
+    let totalTime = getRandomInt(0, 25 * 1000);
+    let sleepTime = getRandomInt(0, 200);
     let timer = new Timer(totalTime);
 
     await sleep(sleepTime);
@@ -33,8 +30,8 @@ test('timer has to be explicitly started', async () => {
 });
 
 test('timer stops at zero', async () => {
-    let totalTime = getRandomTime(0, 100);
-    let sleepTime = getRandomTime(150, 200);
+    let totalTime = getRandomInt(0, 100);
+    let sleepTime = getRandomInt(150, 200);
     let timer = new Timer(totalTime);
 
     timer.start();
