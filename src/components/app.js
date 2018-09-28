@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import TimerDisplay from './timer-display';
 
+const DEFAULT_TIME = 300000; // 5 minutes in milliseconds
+
 export default class App extends Component {
     render() {
         return(
-            <TimerDisplay time="300000"></TimerDisplay>
+            <TimerDisplay time={DEFAULT_TIME}></TimerDisplay>
         );
     }
 }
