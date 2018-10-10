@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import Timer from '../models/timer';
 import Time from '../models/time';
-
-const REFRESH_RATE = 1000 / 30; // 30 fps
 
 export default class TimerDisplay extends Component {
     constructor(props) {
         super(props);
 
-        this._timer = props.time === null || isNaN(props.time) ?
-            new Timer(0) : new Timer(props.time);
-        
-        this.state = {timeLeft: new Time(this._timer.timeLeft)};
-        
-        this._intervalId = setInterval(() => this.updateState(), REFRESH_RATE);
-        this._timer.start();
+        this.state = isNaN(this.props.time) ? 
+            {timeLeft: new Time(0)} : 
+            {timeLeft: this.props.time};
     }
 
-    updateState() {
-        let timeLeft = this._timer.timeLeft;
-        if (timeLeft === 0) clearInterval(this._intervalId);
-        this.setState({timeLeft: new Time(timeLeft)});
+    componentDidUpdate(prevProps) {
+        if (this.props.time !== null && this.props.time !== prevProps.time) {
+            this.setState({timeLeft: this.props.time});
+        }
     }
 
     formatNumber(n, digits) {

@@ -11,6 +11,6 @@ export default class Timer {
     }
 
     start() {
-        this._timeStarted = Date.now();
+        if (this._timeStarted === null) this._timeStarted = Date.now();
     }
 }
