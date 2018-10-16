@@ -5,14 +5,19 @@ export default class TimerDisplay extends Component {
     constructor(props) {
         super(props);
 
-        this.state = isNaN(this.props.time) ? 
-            {timeLeft: new Time(0)} : 
-            {timeLeft: this.props.time};
+        this.state = {
+            timeLeft: isNaN(this.props.timeLeft) ? new Time(0) : this.props.timeLeft,
+            totalTime: isNaN(this.props.totalTime) ? new Time(0) : this.props.totalTime
+        };
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.time !== null && this.props.time !== prevProps.time) {
-            this.setState({timeLeft: this.props.time});
+        if (this.props.timeLeft !== null && this.props.timeLeft !== prevProps.timeLeft) {
+            this.setState({timeLeft: this.props.timeLeft});
+        }
+
+        if (this.props.totalTime !== null && this.props.totalTime !== prevProps.totalTime) {
+            this.setState({totalTime: this.props.totalTime});
         }
     }
 
@@ -23,9 +28,20 @@ export default class TimerDisplay extends Component {
     render() {
         let minutes = this.formatNumber(this.state.timeLeft.minutes, 2);
         let seconds = this.formatNumber(this.state.timeLeft.seconds, 2);
-        let ms = this.formatNumber(this.state.timeLeft.milliseconds, 3);
+
+        let progress = 100 * this.state.timeLeft.total / this.state.totalTime.total;
+        if (this.state.totalTime.total === 0) progress = 100;
+
         return(
-            <div>{minutes}:{seconds}.{ms}</div>
+            <div className="col">
+                <div className="row justify-content-center mt-5">
+                    <span className="display-1 font-weight-bold">{minutes}:{seconds}</span>
+                </div>
+                <div className="progress">
+                    <div className="progress-bar" role="progressbar" style={{width: progress + '%'}}
+                        aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
         );
     }
 }

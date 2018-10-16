@@ -6,4 +6,5 @@ export default class Time {
     get minutes() { return Math.floor((this._time % (1000 * 60 * 60)) / (1000 * 60)) }
     get seconds() { return Math.floor((this._time % (1000 * 60)) / 1000) }
     get milliseconds() { return Math.floor(this._time % 1000) }
+    get total() { return this._time }
 }

@@ -16,7 +16,8 @@ export default class App extends Component {
 
         this.state = {
             timerRunning: false,
-            timeLeft: new Time(0)
+            timeLeft: new Time(0),
+            totalTime: new Time(0)
         };
     }
 
@@ -39,7 +40,7 @@ export default class App extends Component {
             this._intervalId = setInterval(() => 
                 this.updateState(),
                 REFRESH_RATE);
-            this.setState({timerRunning: true});
+            this.setState({timerRunning: true, totalTime: new Time(time)});
         }
     }
 
@@ -60,15 +61,27 @@ export default class App extends Component {
 
     render() {
         return(
-            <div>
-                <TimerDisplay time={this.state.timeLeft} />
+            <div className="container">
+                <TimerDisplay timeLeft={this.state.timeLeft} totalTime={this.state.totalTime} />
                 {this.state.timerRunning ? (
-                    <button onClick={() => this.stopTimer()}>Stop</button>
+                    <div className="row justify-content-center">
+                        <button type="button" className="btn btn-danger my-1 w-75" 
+                            onClick={() => this.stopTimer()}>Stop</button>
+                    </div>
                 ) : (
                     <div>
-                        <button onClick={() => this.startPomodoro()}>Start Pomodoro</button>
-                        <button onClick={() => this.startShortBreak()}>Start Short Break</button>
-                        <button onClick={() => this.startLongBreak()}>Start Long Break</button>
+                        <div className="row justify-content-center">
+                            <button type="button" className="btn btn-primary my-1 w-75" 
+                                onClick={() => this.startPomodoro()}>Start Pomodoro</button>
+                        </div>
+                        <div className="row justify-content-center">
+                            <button type="button" className="btn btn-primary my-1 w-75" 
+                                onClick={() => this.startShortBreak()}>Start Short Break</button>
+                        </div>
+                        <div className="row justify-content-center">
+                            <button type="button" className="btn btn-primary my-1 w-75" 
+                                onClick={() => this.startLongBreak()}>Start Long Break</button>
+                        </div>
                     </div>
                 )}
             </div>
