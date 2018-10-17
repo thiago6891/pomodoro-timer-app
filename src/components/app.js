@@ -13,6 +13,7 @@ export default class App extends Component {
         super(props);
 
         this._intervalId = null;
+        this._alarmSound = new Audio('alarm.mp3');
 
         this.state = {
             timerRunning: false,
@@ -55,7 +56,10 @@ export default class App extends Component {
 
     updateState() {
         let timeLeft = this._timer.timeLeft;
-        if (timeLeft === 0) this.stopTimer();
+        if (timeLeft === 0) {
+            this.stopTimer();
+            this._alarmSound.play();
+        }
         this.setState({timeLeft: new Time(timeLeft)});
     }
 
